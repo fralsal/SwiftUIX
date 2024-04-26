@@ -103,6 +103,14 @@ extension _PaginationView: UIViewControllerRepresentable {
         
         progressionController = _ProgressionController(base: uiViewController, currentPageIndex: $currentPageIndex)
         
+        if #available(iOS 14.0, tvOS 14.0, *) {
+            uiViewController.pageControl?.preferredIndicatorImage = context.environment.preferredIndicatorImage
+        }
+        
+        if #available(iOS 16.0, *) {
+            uiViewController.pageControl?.preferredCurrentPageIndicatorImage = context.environment.preferredCurrentPageIndicatorImage
+        }
+        
         return uiViewController
     }
     
@@ -209,7 +217,6 @@ extension _PaginationView: UIViewControllerRepresentable {
                         pageControl.setIndicatorImage(image, forPage: page)
                     }
                 }
-                pageControl.preferredIndicatorImage = context.environment.preferredIndicatorImage
             }
         }
         
@@ -220,7 +227,6 @@ extension _PaginationView: UIViewControllerRepresentable {
                         pageControl.setCurrentPageIndicatorImage(image, forPage: page)
                     }
                 }
-                pageControl.preferredCurrentPageIndicatorImage = context.environment.preferredCurrentPageIndicatorImage
             }
         }
         
