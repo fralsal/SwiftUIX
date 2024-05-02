@@ -22,19 +22,13 @@ let package = Package(
     targets: [
         .target(
             name: "_SwiftUIX",
-            dependencies: [],
-            swiftSettings: [
-                .unsafeFlags([
-                    "-suppress-warnings"
-                ])
-            ]
+            dependencies: []
         ),
         .target(
             name: "SwiftUIX",
             dependencies: [
                 "_SwiftUIX"
-            ],
-            swiftSettings: []
+            ]
         )
     ]
 )
