@@ -6,6 +6,7 @@ import SwiftUI
 
 /// https://raw.githubusercontent.com/nathantannar4/Turbocharger/52f22b97dcefed06e274d66ccba0f659f8eefbd5/Sources/Turbocharger/Sources/Extensions/Image%2BExtensions.swift
 @_spi(Internal)
+@_documentation(visibility: internal)
 public enum _SwiftUI_ImageProvider {
     case system(String)
     case named(String, Bundle?)
@@ -61,7 +62,7 @@ public enum _SwiftUI_ImageProvider {
     func resolved(in environment: EnvironmentValues) -> Image._AppKitOrUIKitType? {
         switch self {
             case .system(let name): do {
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
                 let scale: UIImage.SymbolScale = {
                     let scale = environment.imageScale
                     
@@ -94,7 +95,7 @@ public enum _SwiftUI_ImageProvider {
 #endif
             }
             case let .named(name, bundle): do {
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
                 return UIImage(named: name, in: bundle, with: nil)
 #elseif os(macOS)
                 if #available(macOS 14.0, *), let bundle {
@@ -106,7 +107,7 @@ public enum _SwiftUI_ImageProvider {
             case let .appKitOrUIKitImage(image):
                 return image
             case let .cgImage(image, scale, orientation): do {
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
                 let orientation: UIImage.Orientation = {
                     switch orientation {
                         case .down: return .down
@@ -129,11 +130,11 @@ public enum _SwiftUI_ImageProvider {
 }
 
 extension Image {
-#if os(macOS)
+    #if os(macOS)
     public typealias _AppKitOrUIKitType = NSImage
-#elseif os(iOS) || os(tvOS) || os(watchOS)
+    #elseif os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
     public typealias _AppKitOrUIKitType = UIImage
-#endif
+    #endif
     
     public func _toAppKitOrUIKitImage(
         in environment: EnvironmentValues

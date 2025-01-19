@@ -21,6 +21,7 @@ public protocol _SwiftUI_DropInfoProtocol {
 
 #if os(macOS)
 @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@_documentation(visibility: internal)
 public struct _SwiftUIX_DropInfo: _SwiftUI_DropInfoProtocol {
     public let location: CGPoint
     
@@ -41,10 +42,11 @@ public struct _SwiftUIX_DropInfo: _SwiftUI_DropInfoProtocol {
         draggingInfo.itemProviders
     }
 }
-#elseif os(iOS)
+#elseif os(iOS) || os(visionOS)
 import UIKit
 
 @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@_documentation(visibility: internal)
 public struct _SwiftUIX_DropInfo: _SwiftUI_DropInfoProtocol {
     public let location: CGPoint
     
@@ -234,7 +236,7 @@ extension NSTextView {
     }
 }
 
-#elseif os(iOS)
+#elseif os(iOS) || os(visionOS)
 @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
 extension UITextView {
     func _SwiftUIX_dropInteraction(

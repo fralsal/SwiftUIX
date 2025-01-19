@@ -4,15 +4,7 @@
 
 import SwiftUI
 
-#if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
-
-#if os(iOS) || os(visionOS)
-extension AppKitOrUIKitImage {
-    public var _SwiftUIX_cgImage: CGImage? {
-        cgImage
-    }
-}
-#endif
+#if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
 
 extension AppKitOrUIKitImage {
     public func _SwiftUIX_resizeImage(
@@ -31,7 +23,7 @@ extension AppKitOrUIKitImage {
         self.draw(in: rect)
         newImage.unlockFocus()
         return newImage
-#elseif os(iOS)
+#elseif os(iOS) || os(tvOS) || os(visionOS)
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
         self.draw(in: CGRect(origin: .zero, size: newSize))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()

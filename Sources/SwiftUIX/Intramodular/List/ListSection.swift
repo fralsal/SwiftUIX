@@ -6,6 +6,7 @@ import Swift
 import SwiftUI
 
 /// A model suitable for representing sections of a list.
+@_documentation(visibility: internal)
 public struct ListSection<SectionType, ItemType> {
     enum _ItemsStorage {
         case array([ItemType])
@@ -135,9 +136,9 @@ extension ListSection where SectionType: Identifiable, ItemType: Identifiable {
 extension ListSection: Equatable where SectionType: Equatable, ItemType: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         if SectionType.self == Never.self {
-            return Array(lhs.items) == Array(rhs.items)
+            return Array<ItemType>(lhs.items) == Array<ItemType>(rhs.items)
         } else {
-            return lhs.model == rhs.model && Array(lhs.items) == Array(rhs.items)
+            return (lhs.model == rhs.model) && (Array<ItemType>(lhs.items) == Array<ItemType>(rhs.items))
         }
     }
 }

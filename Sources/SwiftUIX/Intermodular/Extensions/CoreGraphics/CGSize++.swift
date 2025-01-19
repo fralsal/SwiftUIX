@@ -59,6 +59,12 @@ extension CGSize {
     public var maximumDimensionLength: CGFloat {
         max(width, height)
     }
+    
+    @_optimize(speed)
+    @inline(__always)
+    public static var _width1_height1: CGSize {
+        CGSize(width: 1, height: 1)
+    }
 }
 
 extension CGSize {
@@ -208,6 +214,10 @@ extension CGSize {
     @inline(__always)
     var _isInvalidForIntrinsicContentSize: Bool {
         width._isInvalidForIntrinsicContentSize || height._isInvalidForIntrinsicContentSize
+    }
+    
+    var _nilIfIsInvalidForIntrinsicContentSize: CGSize? {
+        _isInvalidForIntrinsicContentSize ? nil : self
     }
 
     /// Whether the size contains a `AppKitOrUIKitView.noIntrinsicMetric` or an infinity.

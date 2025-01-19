@@ -8,6 +8,7 @@ import SwiftUI
 /// The relative amount of padding, to be used with `View/padding(_:_:)`.
 ///
 /// **Do not** reference this type directly.
+@_documentation(visibility: internal)
 public enum _RelativePaddingAmount: CaseIterable, Hashable {
     case extraSmall
     case small
@@ -34,6 +35,7 @@ extension View {
     ///
     /// - Returns: A view that pads this view using the specified edge insets
     ///   with specified amount of padding.
+    @_disfavoredOverload
     @ViewBuilder
     public func padding(
         _ edges: Edge.Set,
@@ -69,12 +71,14 @@ extension View {
         }
     }
     
+    @_disfavoredOverload
     public func padding(
         _ amount: _RelativePaddingAmount?
     ) -> some View {
         padding(.all, amount)
     }
     
+    @_disfavoredOverload
     public func padding(
         horizontal: _RelativePaddingAmount,
         vertical: _RelativePaddingAmount
